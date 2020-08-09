@@ -18,6 +18,7 @@ class Add_Values(APIView):
 
 class IRIS_Model_Predict(APIView):
     #permission_classes = [IsAuthenticated]
+    #throttle_classes = [LimitedRateThrottle]
     def post(self, request, format=None):
         data = request.data
         keys = []
