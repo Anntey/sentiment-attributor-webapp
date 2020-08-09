@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { Header, Button, Form, Image } from 'semantic-ui-react'
+import axios from 'axios'
 import './App.css'
-import { Header, Segment, Input, Image } from 'semantic-ui-react'
 
 const App = () => {
   const [input, setInput] = useState('')
@@ -15,42 +16,30 @@ const App = () => {
     'https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,665,1000_AL_.jpg',
     'https://m.media-amazon.com/images/M/MV5BZjhkMDM4MWItZTVjOC00ZDRhLThmYTAtM2I5NzBmNmNlMzI1XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_SY1000_CR0,0,679,1000_AL_.jpg'
   ]
-  useEffect(() => {
-    if (!imageUrl) {
-      setImageUrl(urlList[Math.floor(Math.random() * Math.floor(urlList.length))])
-    }
-  })
+
+  if (!imageUrl) {
+    setImageUrl(urlList[Math.floor(Math.random() * Math.floor(urlList.length))])
+  }
   
+  //axios.get('http://localhost:8000/ping').then(res => console.log(res.data))
 
-  // ping backend
-  // axios.get('http://localhost:8000/ping').then(res => console.log(res.data))
+  const handleButtonPress = (event) => {
+    event.preventDefault()
+    
+    const requestJson = {
+      "sepal length (cm)": 7.9,
+      "sepal width (cm)": 2.9,
+      "petal length (cm)": 6.3,
+      "petal width (cm)": 1.8
+    }
 
-  // const handleInputChange = (event) => {
-  //   event.preventDefault()
-
-  //   const inputFile = event.target.files[0]
-
-  //   if (inputFile) {
-  //     setFileUrl(URL.createObjectURL(inputFile))
-
-  //     const formData = new FormData()
-  //     formData.append('img', inputFile, inputFile.name)
-
-  //     const config = {
-  //       headers: [
-  //         { 'Content-Type': 'multipart/form-data' },
-  //         { 'Access-Control-Allow-Origin': '*' }
-  //       ]
-  //     }
-
-  //     axios
-  //       .post('http://localhost:8000/predict', formData, config)
-  //       .then(response => {
-  //         const prob = parseFloat(response.data.prediction)
-  //         setPred(prob)
-  //       })
-  //   }
-  // }
+    axios
+      .post('http://localhost:8000/api/predict/', requestJson)
+      .then(response => {
+        const pred = response.data['Prediced Iris Species']
+        setResult(pred)
+      })
+  }
 
   const handleInputChange = (event) => {
     event.preventDefault()
@@ -60,31 +49,22 @@ const App = () => {
 
   return (
     <div className='App'>
-      <Segment className='Segment'>
-
         <Header className='Header'>Please give your opinion on this movie</Header>
 
         <Image src={imageUrl} />
-
-        <Input placeholder='I had doubts about the actors' onChange={handleInputChange}/>
-
-{/* 
-        <Button
-          className='Input'
-          type='file'
-          onChange={handleInputChange}
-        /> */}
         
+        <Form onSubmit={handleButtonPress}>
+          <Form.TextArea placeholder='I had doubts about the actors but...' onChange={handleInputChange} />
+          <Button type='submit'>Analyse</Button>
+        </Form>
 
-        {/* <div className='Prediction'>
-        {pred
-          ? <h2>Prediction: {(pred * 100).toFixed(3)} %</h2>
-          : ''
-        }
-        </div> */}
+        <div className='Prediction'>
+          {result
+            ? <h2>{result} %</h2>
+            : ''
+          }
+        </div>
         
-
-      </Segment>
       <div className='Footer'>Made by <a href={'https://github.com/anntey'}>Anntey</a></div>
     </div>
   )

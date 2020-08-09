@@ -1,28 +1,32 @@
 .App {
   text-align: center;
+  margin-top: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.Footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 35px
 }
 
-.App-link {
+
+/* .App-link {
   color: #61dafb;
-}
+} */
 
-.Img {
+/* .Img {
   width: 50%;
   margin: auto;
-}
+} */
 
 .ui.image {
-  width: 50%;
+  width: 25%;
   margin: auto;
+  margin-bottom: 10px;
+}
+
+form.ui.form {
+  width: 25%;
+  margin: auto; 
 }
