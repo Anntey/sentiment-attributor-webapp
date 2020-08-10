@@ -34,3 +34,20 @@ class IRIS_Model_Predict(APIView):
         y_pred = y_pred.map(target_map).to_numpy()
         response_dict = {"Prediced Iris Species": y_pred[0]}
         return Response(response_dict, status=200)
+
+class Sentiment_Model_Predict(APIView):
+    def post(self, request, format=None):
+        data = request.data
+        keys = []
+        values = []
+        for key in data:
+            keys.append(key)
+            values.append(data[key])
+        X = pd.Series(values).to_numpy().reshape(1, -1)
+        model = PredictionappConfig.model
+        preds = model.predict(X)
+        preds = pd.Series(y_pred)
+        target_map = {0: 'setosa', 1: 'versicolor', 2: 'virginica'}
+        y_pred = y_pred.map(target_map).to_numpy()
+        response_dict = {"Prediced Iris Species": y_pred[0]}
+        return Response(response_dict, status=200)
