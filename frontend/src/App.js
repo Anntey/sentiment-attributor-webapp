@@ -6,7 +6,10 @@ import './App.css'
 const App = () => {
   const [input, setInput] = useState('')
   const [imageUrl, setImageUrl] = useState(null)
-  const [result, setResult] = useState(null)
+  const [resultText, setResultText] = useState([])
+  const [resultAttribs, setResultAttribs] = useState([])
+  const [resultProb, setResultProb] = useState(null)
+
 
   const urlList = [
     'https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg',
@@ -27,18 +30,30 @@ const App = () => {
     event.preventDefault()
     
     const requestJson = {
-      "sepal length (cm)": 7.9,
-      "sepal width (cm)": 2.9,
-      "petal length (cm)": 6.3,
-      "petal width (cm)": 1.8
+      'text': 'I really enjoyed the performance of the actors'
     }
 
     axios
       .post('http://localhost:8000/api/predict/', requestJson)
       .then(response => {
-        const pred = response.data['Prediced Iris Species']
-        setResult(pred)
+        const prob = (parseFloat(response.data['prob']) * 100).toFixed(2)
+        const attributions = response.data['attributions']
+        const text = response.data['text']
+        console.log('prob', prob)
+        console.log('attr', attributions)
+        console.log('text', text)
+        setResultText(text)
+        setResultAttribs(attributions)
+        setResultProb(prob)
       })
+  }
+
+  const getColor = (number) => {
+    if (number > 0) {
+      return number
+    } else {
+      return -1 * ((number - 1) / (0 - 1))
+    }
   }
 
   const handleInputChange = (event) => {
@@ -58,11 +73,16 @@ const App = () => {
           <Button type='submit'>Analyse</Button>
         </Form>
 
-        <div className='Prediction'>
-          {result
-            ? <h2>{result} %</h2>
+        <div className='resultProb'>
+          {resultProb
+            ? <h2>{resultProb} %</h2>
             : ''
           }
+        </div>
+
+        <div className='resultSentence'>
+          {resultText.map((word, i) =>
+            <a className='resultWord' key={i} style={{ backgroundColor: 'rgb(0, 255, 50)' }}>{word} {getColor(resultAttribs[i])}</a>)}
         </div>
         
       <div className='Footer'>Made by <a href={'https://github.com/anntey'}>Anntey</a></div>

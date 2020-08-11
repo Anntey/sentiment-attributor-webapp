@@ -30,3 +30,21 @@ form.ui.form {
   width: 25%;
   margin: auto; 
 }
+
+.resultProb {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.resultSentence {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.resultWord {
+  background-color: lightgrey;
+  color: white;
+  border-radius: 3px;
+  margin-right: 3px;
+  padding: 2px;
+}
