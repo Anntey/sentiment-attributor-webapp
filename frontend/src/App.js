@@ -50,7 +50,7 @@ const App = () => {
 
     const response = await axios.post('http://localhost:8000/api/predict/', requestJson)
 
-    const prob = (parseFloat(response.data['prob']) * 100).toFixed(2)
+    const prob = (parseFloat(response.data['prob']) * 100).toFixed(0)
     const attributions = response.data['attributions']
     const text = response.data['text']
 
