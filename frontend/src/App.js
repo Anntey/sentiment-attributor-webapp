@@ -10,7 +10,6 @@ const App = () => {
   const [resultAttribs, setResultAttribs] = useState([])
   const [resultProb, setResultProb] = useState(null)
 
-
   const urlList = [
     'https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg',
     'https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,704,1000_AL_.jpg',
@@ -26,33 +25,46 @@ const App = () => {
   
   //axios.get('http://localhost:8000/ping').then(res => console.log(res.data))
 
-  const handleButtonPress = (event) => {
+  const handleButtonPress = async (event) => {
     event.preventDefault()
     
     const requestJson = {
       'text': 'I really enjoyed the performance of the actors'
     }
 
-    axios
-      .post('http://localhost:8000/api/predict/', requestJson)
-      .then(response => {
-        const prob = (parseFloat(response.data['prob']) * 100).toFixed(2)
-        const attributions = response.data['attributions']
-        const text = response.data['text']
-        console.log('prob', prob)
-        console.log('attr', attributions)
-        console.log('text', text)
-        setResultText(text)
-        setResultAttribs(attributions)
-        setResultProb(prob)
-      })
+    // axios
+    //   .post('http://localhost:8000/api/predict/', requestJson)
+    //   .then(response => {
+    //     const prob = (parseFloat(response.data['prob']) * 100).toFixed(2)
+    //     const attributions = response.data['attributions']
+    //     const text = response.data['text']
+
+    //     setResultText(text)
+    //     setResultAttribs(attributions)
+    //     setResultProb(prob)
+    //   })
+    const response = await axios.post('http://localhost:8000/api/predict/', requestJson)
+
+    const prob = (parseFloat(response.data['prob']) * 100).toFixed(2)
+    const attributions = response.data['attributions']
+    const text = response.data['text']
+
+    setResultText(text)
+    setResultAttribs(attributions.map(num => getColor(num)))
+    setResultProb(prob)
+    
   }
+
 
   const getColor = (number) => {
     if (number > 0) {
-      return number
+      const firstDecimal = parseFloat(number.toString()[2])
+      const green_to_white = ['#0dff0e','#1aff1c','#28ff2a','#35ff38','#42ff46','#4fff55','#5cff63','#69ff71','#77ff7f','#84ff8d']
+      return green_to_white[firstDecimal]
     } else {
-      return -1 * ((number - 1) / (0 - 1))
+      const firstDecimal = parseFloat((-1 * number).toString()[2])
+      const red_to_white = ['#ff0e0e','#ff1c1c','#ff2a2a','#ff3838','#ff4646','#ff5555','#ff6363','#ff7171','#ff7f7f','#ff8d8d']
+      return red_to_white[firstDecimal]
     }
   }
 
@@ -82,7 +94,7 @@ const App = () => {
 
         <div className='resultSentence'>
           {resultText.map((word, i) =>
-            <a className='resultWord' key={i} style={{ backgroundColor: 'rgb(0, 255, 50)' }}>{word} {getColor(resultAttribs[i])}</a>)}
+            <a className='resultWord' key={i} style={{ backgroundColor: `${resultAttribs[i]}` }}>{word}</a>)}
         </div>
         
       <div className='Footer'>Made by <a href={'https://github.com/anntey'}>Anntey</a></div>
