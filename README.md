@@ -9,13 +9,13 @@ $ python manage.py runserver
 ```
 
 ## Frontend
-A minimal React frontend at http://localhost:3000 that makes POST requests to the backend when the text form is submitted. The predicted probability is rendered and words in the original sentence are colored red-green by their corresponding attributions.
+A minimal React frontend at http://localhost:3000 that makes POST requests to the backend when the text form is submitted. The poster of a random movie is given as inspiration. The predicted probability is rendered and words in the original sentence are colored red-green by their corresponding attributions.
 
 ```zsh
 $ npm start
 ```
 
-# To-do
+## To-do
 - [ ] Gunicorn
 - [ ] NGINX
 - [ ] Docker
