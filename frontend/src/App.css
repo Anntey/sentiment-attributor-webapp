@@ -10,7 +10,6 @@
   height: 35px
 }
 
-
 /* .App-link {
   color: #61dafb;
 } */
@@ -21,13 +20,18 @@
 } */
 
 .ui.image {
-  width: 25%;
+  min-width: 200px;
+  max-width: 300px;
   margin: auto;
   margin-bottom: 10px;
 }
 
+.ui.button {
+  width: 300px;
+}
+
 form.ui.form {
-  width: 25%;
+  width: 300px;
   margin: auto; 
 }
 
@@ -37,14 +41,20 @@ form.ui.form {
 }
 
 .resultSentence {
+  margin: auto;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .resultWord {
   background-color: white;
+  font-size: 15px;
   color: white;
   border-radius: 3px;
   margin-right: 3px;
-  padding: 2px;
+  padding: 3px;
 }
+
+.resultWord:hover {
+  color: white;
+} 

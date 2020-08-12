@@ -29,8 +29,12 @@ const App = () => {
     event.preventDefault()
     
     const requestJson = {
-      'text': 'I really enjoyed the performance of the actors'
+      'text': `I really didn't enjoy the performance of the actors`
     }
+
+    // const requestJson = {
+    //   'text': input
+    // }
 
     // axios
     //   .post('http://localhost:8000/api/predict/', requestJson)
@@ -43,6 +47,7 @@ const App = () => {
     //     setResultAttribs(attributions)
     //     setResultProb(prob)
     //   })
+
     const response = await axios.post('http://localhost:8000/api/predict/', requestJson)
 
     const prob = (parseFloat(response.data['prob']) * 100).toFixed(2)
@@ -52,18 +57,34 @@ const App = () => {
     setResultText(text)
     setResultAttribs(attributions.map(num => getColor(num)))
     setResultProb(prob)
-    
   }
 
 
   const getColor = (number) => {
     if (number > 0) {
       const firstDecimal = parseFloat(number.toString()[2])
-      const green_to_white = ['#0dff0e','#1aff1c','#28ff2a','#35ff38','#42ff46','#4fff55','#5cff63','#69ff71','#77ff7f','#84ff8d']
+      const green_to_white = ['#226122',
+      '#2b6a2b',
+      '#337333',
+      '#3c7c3c',
+      '#448544',
+      '#559755',
+      '#67a867',
+      '#78ba78',
+      '#89cc89'].reverse()
       return green_to_white[firstDecimal]
     } else {
       const firstDecimal = parseFloat((-1 * number).toString()[2])
-      const red_to_white = ['#ff0e0e','#ff1c1c','#ff2a2a','#ff3838','#ff4646','#ff5555','#ff6363','#ff7171','#ff7f7f','#ff8d8d']
+      const red_to_white = ['#feb8b8',
+      '#f4abab',
+      '#ea9e9e',
+      '#e09191',
+      '#d68585',
+      '#c16b6b',
+      '#ad5151',
+      '#993838',
+      '#851e1e']
+      .reverse()
       return red_to_white[firstDecimal]
     }
   }
@@ -87,7 +108,7 @@ const App = () => {
 
         <div className='resultProb'>
           {resultProb
-            ? <h2>{resultProb} %</h2>
+            ? <h2>{resultProb} % positive</h2>
             : ''
           }
         </div>
