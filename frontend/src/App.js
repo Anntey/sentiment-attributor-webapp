@@ -33,7 +33,7 @@ const App = () => {
     }
 
     // const requestJson = {
-    //   'text': input
+    //   'text': `${input}`
     // }
 
     // axios
@@ -51,41 +51,25 @@ const App = () => {
     const response = await axios.post('http://localhost:8000/api/predict/', requestJson)
 
     const prob = (parseFloat(response.data['prob']) * 100).toFixed(0)
-    const attributions = response.data['attributions']
+    const attributions = response.data['attributions'].map(a => getColor(a))
     const text = response.data['text']
 
     setResultText(text)
-    setResultAttribs(attributions.map(num => getColor(num)))
+    setResultAttribs(attributions)
     setResultProb(prob)
   }
 
-
   const getColor = (number) => {
     if (number > 0) {
-      const firstDecimal = parseFloat(number.toString()[2])
-      const green_to_white = ['#226122',
-      '#2b6a2b',
-      '#337333',
-      '#3c7c3c',
-      '#448544',
-      '#559755',
-      '#67a867',
-      '#78ba78',
-      '#89cc89'].reverse()
-      return green_to_white[firstDecimal]
+      const firstDecimal = parseFloat(number.toFixed(1).toString()[2])
+      const white_to_green = ['#1A511A', '#226122', '#2B6A2B', '#337333', '#3C7C3C', '#448544', '#559755', '#67A867', '#78BA78', '#89CC89'].reverse()
+      const shadeGreen = white_to_green[firstDecimal]
+      return shadeGreen
     } else {
-      const firstDecimal = parseFloat((-1 * number).toString()[2])
-      const red_to_white = ['#feb8b8',
-      '#f4abab',
-      '#ea9e9e',
-      '#e09191',
-      '#d68585',
-      '#c16b6b',
-      '#ad5151',
-      '#993838',
-      '#851e1e']
-      .reverse()
-      return red_to_white[firstDecimal]
+      const firstDecimal = parseFloat((-1 * number).toFixed(1).toString()[2])
+      const white_to_red = ['#FEB8B8', '#F4ABAB', '#EA9E9E', '#E09191', '#D68585', '#C16B6B', '#AD5151', '#993838', '#851E1E', '#741616']
+      const shadeRed = white_to_red[firstDecimal]
+      return shadeRed
     }
   }
 
@@ -97,7 +81,7 @@ const App = () => {
 
   return (
     <div className='App'>
-        <Header className='Header'>Please give your opinion on this movie</Header>
+        <Header>Please give your opinion on this movie</Header>
 
         <Image src={imageUrl} />
         
