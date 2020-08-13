@@ -1,0 +1,5 @@
+.gitignore
+glove-6B-50d.txt
+aclImdb/
+.ipynb_checkpoints
+.vector_cache

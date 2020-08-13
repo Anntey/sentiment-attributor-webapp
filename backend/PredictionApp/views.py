@@ -7,6 +7,8 @@ import torch
 from captum.attr import LayerIntegratedGradients, TokenReferenceBase
 
 class Sentiment_Model_Analyse(APIView):
+    def get(self, request, format = None):
+        return Response({'response': 'Hello world'}, status = 200)
     def post(self, request, format = None):
         # get input from request
         sentence = str(request.data['text'])

@@ -2,6 +2,7 @@ from django.apps import AppConfig
 import os
 import spacy
 import torch
+from PredictionApp.training.model import CNN
 
 class PredictionappConfig(AppConfig):
     name = 'PredictionApp'
@@ -11,7 +12,8 @@ class PredictionappConfig(AppConfig):
     # set device
     device = torch.device('cpu')
     # load model
-    model = torch.load(os.path.join(model_dir, 'model.pt'))
+    model = CNN()
+    model.load_state_dict(torch.load(os.path.join(model_dir, 'model.pt'), map_location = device))
     # load spacy preprocessor
     preprocessor = spacy.load('en_core_web_sm')
     # load torchtext tokenizer (vocabulary + embeddings)

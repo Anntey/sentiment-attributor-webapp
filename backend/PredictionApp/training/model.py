@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class CNN(nn.Module):
-    def __init__(self, vocab_size, embedding_dim, n_filters, filter_sizes, output_dim, dropout, pad_idx):
+    def __init__(self, vocab_size = 101982, embedding_dim = 50, n_filters = 100, filter_sizes = [3, 4, 5], output_dim = 1, dropout = 0.5, pad_idx = 1):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx = pad_idx)
         self.convs = nn.ModuleList([
