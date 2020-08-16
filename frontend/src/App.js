@@ -23,30 +23,16 @@ const App = () => {
     setImageUrl(urlList[Math.floor(Math.random() * Math.floor(urlList.length))])
   }
   
-  //axios.get('http://localhost:8000/ping').then(res => console.log(res.data))
-
   const handleButtonPress = async (event) => {
     event.preventDefault()
     
-    const requestJson = {
-      'text': `I really didn't enjoy the performance of the actors`
-    }
-
     // const requestJson = {
-    //   'text': `${input}`
+    //   'text': `I really didn't enjoy the performance of the actors`
     // }
 
-    // axios
-    //   .post('http://localhost:8000/api/predict/', requestJson)
-    //   .then(response => {
-    //     const prob = (parseFloat(response.data['prob']) * 100).toFixed(2)
-    //     const attributions = response.data['attributions']
-    //     const text = response.data['text']
-
-    //     setResultText(text)
-    //     setResultAttribs(attributions)
-    //     setResultProb(prob)
-    //   })
+    const requestJson = {
+      'text': `${input}`
+    }
 
     const response = await axios.post('http://localhost:8000/api/predict/', requestJson)
 
@@ -75,7 +61,7 @@ const App = () => {
 
   const handleInputChange = (event) => {
     event.preventDefault()
-
+    
     setInput(event.target.value)
   }
 

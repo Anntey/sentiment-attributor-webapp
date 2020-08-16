@@ -17,9 +17,6 @@ class Sentiment_Model_Analyse(APIView):
         tokenizer = PredictionappConfig.tokenizer
         preprocessor = PredictionappConfig.preprocessor
         model = PredictionappConfig.model
-        # set to inference mode and send to device (cpu)
-        model.eval()
-        model = model.to(device)
         # reference token index = pad token index
         pad_index = tokenizer.vocab.stoi['pad']
         reference_token = TokenReferenceBase(reference_token_idx = pad_index)

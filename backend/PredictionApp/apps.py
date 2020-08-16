@@ -14,6 +14,8 @@ class PredictionappConfig(AppConfig):
     # load model
     model = CNN()
     model.load_state_dict(torch.load(os.path.join(model_dir, 'model.pt'), map_location = device))
+    model.eval()
+    model = model.to(device)
     # load spacy preprocessor
     preprocessor = spacy.load('en_core_web_sm')
     # load torchtext tokenizer (vocabulary + embeddings)

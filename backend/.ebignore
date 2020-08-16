@@ -1,4 +1,4 @@
-.gitignore
+.myvenv/
 glove-6B-50d.txt
 aclImdb/
 .ipynb_checkpoints
