@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+
+  app:
+    image: anntey/sentiment-backend:latest
+    container_name: django-gunicorn
+    restart: always
+    env_file:
+      - ./backend/.env
+    ports:
+      # host:container
+      - "8000:8000"
+    command:
+      "gunicorn --workers=3 --bind=0.0.0.0:8000 MainApp.wsgi:application"
+
+  nginx:
+    image: nginx:1.17
+    container_name: nginx-proxy
+    ports:
+      # host:container
+      - "8080:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - app

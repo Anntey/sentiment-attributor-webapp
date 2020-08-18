@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False #os.getenv('DEBUG')
 
-ALLOWED_HOSTS = ['backend-env.eba-zmgtyab5.eu-north-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -57,10 +57,10 @@ MIDDLEWARE = [
 
 # CORS config
 
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-    f'http://{FRONTEND_HOST}:{FRONTEND_PORT}',
-)
+CORS_ORIGIN_ALLOW_ALL = True
+#CORS_ORIGIN_WHITELIST = (
+#    f'http://{FRONTEND_HOST}:{FRONTEND_PORT}',
+#)
 
 ROOT_URLCONF = 'MainApp.urls'
 

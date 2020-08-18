@@ -3,7 +3,9 @@
 
 ## To-do
 - [x] Docker
-- [ ] AWS: Elastic Beanstalk
+    - [x] Django/Gunicorn
+    - [ ] NginX
+- [ ] AWS: EC2
 - [ ] CI/CD: GitHub Actions
 
 ## Backend
@@ -17,6 +19,8 @@ $ python manage.py runserver
 
 ## Frontend
 A minimal React frontend at http://localhost:3000 that makes POST requests to the backend when the text form is submitted. The poster of a random movie is given as inspiration. The predicted probability is rendered and words in the original sentence are colored red-green by their corresponding attributions.
+
+Main functionality is in frontend/frontend/src/[app.js](https://github.com/Anntey/sentiment-attributor-webapp/blob/master/frontend/src/app.js).
 
 ```zsh
 $ npm start
