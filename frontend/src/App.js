@@ -25,16 +25,12 @@ const App = () => {
   
   const handleButtonPress = async (event) => {
     event.preventDefault()
-    
-    // const requestJson = {
-    //   'text': `I really didn't enjoy the performance of the actors`
-    // }
 
     const requestJson = {
       'text': `${input}`
     }
 
-    const response = await axios.post('http://localhost:8000/api/predict/', requestJson)
+    const response = await axios.post('http://0.0.0.0:8080/api/predict/', requestJson)
 
     const prob = (parseFloat(response.data['prob']) * 100).toFixed(0)
     const attributions = response.data['attributions'].map(a => getColor(a))

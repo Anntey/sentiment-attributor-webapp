@@ -9,18 +9,32 @@ services:
     env_file:
       - ./backend/.env
     ports:
-      # host:container
       - "8000:8000"
     command:
-      "gunicorn --workers=3 --bind=0.0.0.0:8000 MainApp.wsgi:application"
+      "gunicorn --access-logfile /var/log/gunicorn-access.log --error-logfile /var/log/gunicorn-error.log --workers=3 --bind=0.0.0.0:8000 MainApp.wsgi:application"
+    volumes:
+      - ./logs/gunicorn:/var/log
+
+  client:
+    image: anntey/sentiment-frontend:latest
+    container_name: react-serve
+    restart: always
+    ports:
+      - "3000:3000"
+    command:
+      "serve -s -l tcp://0.0.0.0:3000 build"
+    depends_on:
+      - app
 
   nginx:
     image: nginx:1.17
     container_name: nginx-proxy
     ports:
-      # host:container
-      - "8080:80"
+      - "8080:8080"
     volumes:
+      # default directory for virtual host descriptions
       - ./nginx:/etc/nginx/conf.d
+     #- ./logs/nginx:/var/log/
     depends_on:
       - app
+
