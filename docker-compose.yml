@@ -14,6 +14,7 @@ services:
       "gunicorn --access-logfile /var/log/gunicorn-access.log --error-logfile /var/log/gunicorn-error.log --workers=3 --bind=0.0.0.0:8000 MainApp.wsgi:application"
     volumes:
       - ./logs/gunicorn:/var/log
+     #- ./static:/src/static
 
   client:
     image: anntey/sentiment-frontend:latest
@@ -32,9 +33,8 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      # default directory for virtual host descriptions
       - ./nginx:/etc/nginx/conf.d
-      - ./backend/static:static
+     #- ./static:/static
       - ./logs/nginx:/var/log/nginx/
     depends_on:
       - app
