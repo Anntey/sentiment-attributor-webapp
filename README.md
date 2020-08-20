@@ -17,9 +17,7 @@ Uses Gunicorn as a WSGI and NginX as a web server and reverse proxy.
 ## Frontend
 A minimal React frontend at http://localhost:3000 that makes POST requests to the backend when the text form is submitted. The poster of a random movie is given as inspiration. The predicted probability is rendered and words in the original sentence are colored red-green by their corresponding attributions.
 
-Main functionality is in frontend/src/[app.js](https://github.com/Anntey/sentiment-attributor-webapp/blob/master/frontend/src/app.js).
-
-Uses [Serve](https://www.npmjs.com/package/serve) to server the /frontend/build/ folder.
+Main functionality is in frontend/src/[app.js](https://github.com/Anntey/sentiment-attributor-webapp/blob/master/frontend/src/App.js). Uses static file server [Serve](https://www.npmjs.com/package/serve) to serve the built Node application from /frontend/build.
 
 ## Run
 Images for the backend and frontend are pulled from Dockerhub so only the [/nginx/](https://github.com/Anntey/sentiment-attributor-webapp/blob/master/nginx/) folder is needed.

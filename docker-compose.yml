@@ -34,7 +34,8 @@ services:
     volumes:
       # default directory for virtual host descriptions
       - ./nginx:/etc/nginx/conf.d
-     #- ./logs/nginx:/var/log/
+      - ./backend/static:static
+      - ./logs/nginx:/var/log/nginx/
     depends_on:
       - app
 
